@@ -19,9 +19,11 @@ RUN apt-get update && apt-get install -y \
     libbz2-dev \
     libsodium-dev \
     libmagick++-dev \
-    curl \
+    python3-full \
+    python3-pip \
     wget \
-    # fonts-firacode \
+    # curl \
+    fonts-firacode \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Quarto
@@ -37,13 +39,16 @@ RUN R -e "install.packages('languageserver', repos = 'https://cloud.r-project.or
 RUN R -e "install.packages('httpgd', repos = c('https://cranhaven.r-universe.dev', 'https://cloud.r-project.org'))"
 
 # Install uv
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+# RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 # Add uv to PATH
-ENV PATH="/root/.local/bin:$PATH"
+# ENV PATH="/root/.local/bin:$PATH"
 
 # Use uv to install Python packages
-RUN uv pip install --system radian jupyter
+# RUN uv pip install --system radian jupyter
 
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --no-cache-dir radian jupyter
 
 # Create the R library directories with appropriate permissions
 RUN mkdir -p /home/vscode/R/library && \
@@ -53,5 +58,8 @@ RUN mkdir -p /home/vscode/R/library && \
 # Set R library path environment variables
 ENV R_LIBS_USER=/home/vscode/R/library
 ENV R_LIBS_SITE=/usr/local/lib/R/site-library
+
+# Set radian as the R terminal
+ENV R_TERM="/opt/venv/bin/radian"
 
 CMD ["bash"]
