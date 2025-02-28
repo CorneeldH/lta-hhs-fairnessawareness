@@ -41,7 +41,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 # Add uv to PATH
 ENV PATH="/root/.local/bin:$PATH"
 
-Use uv to install Python packages
+# Use uv to install Python packages
 RUN uv pip install radian jupyter
 
 # Create the R library directories with appropriate permissions
