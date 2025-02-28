@@ -21,22 +21,8 @@ RUN apt-get update && apt-get install -y \
     libmagick++-dev \
     curl \
     wget \
-    fonts-firacode \
+    # fonts-firacode \
     && rm -rf /var/lib/apt/lists/*
-
-# Install R packages that are typically used
-# RUN install2.r --error --skipinstalled \
-#    ggplot2 \
-#    dplyr \
-#    tidyr \
-#    readr \
-#    purrr \
-#    tibble \
-#    stringr \
-#    forcats \
-#    languageserver \
-#    httpgd
-    
 
 # Install Quarto
 RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.6.39/quarto-1.6.39-linux-amd64.deb \
@@ -47,23 +33,15 @@ RUN wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.6.39/quar
 WORKDIR /workspaces
 
 # Install renv
-# RUN R -e "install.packages('renv', repos = 'https://cloud.r-project.org/')"
 RUN R -e "install.packages('languageserver', repos = 'https://cloud.r-project.org/')"
 RUN R -e "install.packages('httpgd', repos = c('https://cranhaven.r-universe.dev', 'https://cloud.r-project.org'))"
-
-# Set up renv
-# COPY renv.lock ./
-# RUN R -e "renv::consent(provided = TRUE); renv::init()"
-
-# Add .Rprofile after renv is initialized
-# RUN echo 'source("renv/activate.R")' > .Rprofile
 
 # Install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 # Add uv to PATH
-ENV PATH="/root/.cargo/bin:$PATH"  
+ENV PATH="/root/.local/bin:$PATH"
 
-# Later, you can use uv to install Python packages
+Use uv to install Python packages
 RUN uv pip install radian jupyter
 
 # Create the R library directories with appropriate permissions
