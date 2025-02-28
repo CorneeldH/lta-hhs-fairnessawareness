@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     libbz2-dev \
     libsodium-dev \
     libmagick++-dev \
+    curl \
     wget \
     fonts-firacode \
     && rm -rf /var/lib/apt/lists/*
