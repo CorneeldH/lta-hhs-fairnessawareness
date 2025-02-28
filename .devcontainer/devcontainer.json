@@ -51,7 +51,7 @@
         "r.alwaysUseActiveTerminal": true,
         "r.bracketedPaste": true,
         "r.sessionWatcher": true,
-        "r.rterm.linux": "/usr/local/bin/R",
+        "r.rterm.linux": "/opt/venv/bin/radian",
         "r.rpath.linux": "/usr/local/bin/R",
         "r.lsp.diagnostics": true,
         "r.plot.useHttpgd": true,
